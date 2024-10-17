@@ -18,7 +18,7 @@ from dotenv import load_dotenv
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-load_dotenv(BASE_DIR / '.env')
+load_dotenv(BASE_DIR / ".env")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -43,18 +43,16 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "drf_yasg",
     "drf_spectacular",
-
     "rest_framework",
     "django_filters",
     "rest_framework_simplejwt",
-    'django_celery_beat',
-    'corsheaders',
-
-    'habits',
-    'users',
+    "django_celery_beat",
+    "corsheaders",
+    "habits",
+    "users",
 ]
 
-MIDDLEWARE = {
+MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -63,7 +61,7 @@ MIDDLEWARE = {
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "corsheaders.middleware.CorsMiddleware",
-}
+]
 
 ROOT_URLCONF = "config.urls"
 
@@ -156,7 +154,7 @@ REST_FRAMEWORK = {
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
     "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.IsAuthenticated"],
-    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
 
 SIMPLE_JWT = {
@@ -165,16 +163,16 @@ SIMPLE_JWT = {
 }
 #########################################################
 CORS_ALLOWED_ORIGINS = [
-    'http://127.0.0.1:8000',  # Замените на адрес вашего фронтенд-сервера
+    "http://127.0.0.1:8000",  # Замените на адрес вашего фронтенд-сервера
 ]
 CSRF_TRUSTED_ORIGINS = [
     "http://127.0.0.1:8000",
 ]
 CORS_ALLOW_ALL_ORIGINS = False
 #######################################
-CELERY_BROKER_URL = os.getenv('LOCATION')
+CELERY_BROKER_URL = os.getenv("LOCATION")
 # URL-адрес брокера результатов, также Redis
-CELERY_RESULT_BACKEND = os.getenv('LOCATION')
+CELERY_RESULT_BACKEND = os.getenv("LOCATION")
 # Часовой пояс для работы Celery
 CELERY_TIMEZONE = TIME_ZONE
 # Флаг отслеживания выполнения задач
@@ -183,9 +181,21 @@ CELERY_TASK_TRACK_STARTED = True
 CELERY_TASK_TIME_LIMIT = 30 * 60
 
 CELERY_BEAT_SCHEDULE = {
-    'task-name': {
-        'task': 'habits.tasks.check_milage',  # Путь к задаче
-        'schedule': timedelta(minutes=1),  # Расписание выполнения задачи (например, каждые 10 минут)
+    "task-name": {
+        "task": "habits.tasks.telegram_messages",  # Путь к задаче
+        "schedule": timedelta(
+            days=1
+        ),  # Расписание выполнения задачи (например, каждые 10 минут)
     },
 }
 
+SPECTACULAR_SETTINGS = {
+    "TITLE": "school",
+    "DESCRIPTION": "Your project description",
+    "VERSION": "1.0.0",
+    "SERVE_INCLUDE_SCHEMA": False,
+    # OTHER SETTINGS
+}
+
+TELEGRAM_URL = os.getenv("TELEGRAM_URL")
+TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN")
