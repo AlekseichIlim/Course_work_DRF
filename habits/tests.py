@@ -39,44 +39,54 @@ class HabitTestCase(APITestCase):
             "is_public": "False",
             "complete_time": 1,
         }
-        url = reverse('habits:habit_create')
+        url = reverse("habits:habit_create")
         response = self.client.post(url, data=data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertTrue(Habit.objects.all().exists())
 
     def test_habit_retrieve(self):
 
-        url = reverse('habits:habit_detail', args=(self.habit.pk,))
+        url = reverse("habits:habit_detail", args=(self.habit.pk,))
         response = self.client.get(url)
         data = response.json()
-        self.assertEqual(response.status_code, status.HTTP_200_OK,)
+        self.assertEqual(
+            response.status_code,
+            status.HTTP_200_OK,
+        )
         self.assertTrue(Habit.objects.all().exists())
 
     def test_habit_update(self):
 
-        url = reverse('habits:habit_update', args=(self.habit.pk,))
+        url = reverse("habits:habit_update", args=(self.habit.pk,))
         data = {
-            'title': '10 страниц',
-            'complete_time': 2,
-            'period': 1,
-
+            "title": "10 страниц",
+            "complete_time": 2,
+            "period": 1,
         }
         response = self.client.patch(url, data)
         data = response.json()
-        self.assertEqual(response.status_code, status.HTTP_200_OK,)
+        self.assertEqual(
+            response.status_code,
+            status.HTTP_200_OK,
+        )
         self.assertTrue(Habit.objects.all().exists())
-        self.assertEqual(data.get('title'), '10 страниц', )
+        self.assertEqual(
+            data.get("title"),
+            "10 страниц",
+        )
 
     def test_habit_delete(self):
 
-        url = reverse('habits:habit_delete', args=(self.habit.pk,))
+        url = reverse("habits:habit_delete", args=(self.habit.pk,))
         response = self.client.delete(url)
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         self.assertEqual(Habit.objects.all().count(), 0)
 
     def test_habit_list(self):
 
-        url = reverse('habits:habits_list')
+        url = reverse("habits:habits_list")
         response = self.client.get(url)
-        self.assertEqual(response.status_code, status.HTTP_200_OK, )
-
+        self.assertEqual(
+            response.status_code,
+            status.HTTP_200_OK,
+        )
