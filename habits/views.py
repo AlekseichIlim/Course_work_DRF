@@ -1,5 +1,11 @@
 from django.shortcuts import render
-from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveAPIView, UpdateAPIView, DestroyAPIView
+from rest_framework.generics import (
+    CreateAPIView,
+    ListAPIView,
+    RetrieveAPIView,
+    UpdateAPIView,
+    DestroyAPIView,
+)
 
 from rest_framework.serializers import ValidationError
 
@@ -10,7 +16,7 @@ from users.permissions import IsOwnerPermission
 
 
 class HabitCreateAPIView(CreateAPIView):
-    """ Создание привчки """
+    """Создание привчки"""
 
     serializer_class = HabitSerializer
 
@@ -46,7 +52,7 @@ class HabitRetrieveAPIView(RetrieveAPIView):
 
     serializer_class = HabitSerializer
     queryset = Habit.objects.all()
-    permission_classes = (IsOwnerPermission, )
+    permission_classes = (IsOwnerPermission,)
 
 
 class HabitUpdateAPIView(UpdateAPIView):
@@ -54,7 +60,7 @@ class HabitUpdateAPIView(UpdateAPIView):
 
     serializer_class = HabitSerializer
     queryset = Habit.objects.all()
-    permission_classes = (IsOwnerPermission, )
+    permission_classes = (IsOwnerPermission,)
 
 
 class HabitDestroyAPIView(DestroyAPIView):
@@ -62,5 +68,4 @@ class HabitDestroyAPIView(DestroyAPIView):
 
     serializer_class = HabitSerializer
     queryset = Habit.objects.all()
-    permission_classes = (IsOwnerPermission, )
-
+    permission_classes = (IsOwnerPermission,)
